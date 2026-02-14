@@ -1,0 +1,723 @@
+@import 'tailwindcss';
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --font-display: var(--font-display);
+  --font-hand: var(--font-handwritten);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+  overflow: hidden;
+}
+
+/* ==========================================
+   FONT UTILITIES
+   ========================================== */
+
+.font-display {
+  font-family: var(--font-display), Georgia, serif;
+}
+
+.font-hand {
+  font-family: var(--font-handwritten), 'Comic Sans MS', cursive;
+}
+
+/* ==========================================
+   GRADIENT BACKGROUNDS
+   ========================================== */
+
+.bg-gradient-valentine {
+  background: linear-gradient(135deg, #FF9A9E 0%, #FAD0C4 25%, #FFB6C1 50%, #FF69B4 75%, #FF4081 100%);
+  background-size: 400% 400%;
+  animation: gradient-shift 10s ease infinite;
+}
+
+.bg-gradient-party {
+  background: linear-gradient(135deg, #FF4081 0%, #F50057 20%, #FF1744 40%, #FF6F00 60%, #FF4081 80%, #E91E63 100%);
+  background-size: 500% 500%;
+  animation: gradient-shift 4s ease infinite;
+}
+
+@keyframes gradient-shift {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+/* ==========================================
+   FLOATING HEARTS ANIMATION
+   ========================================== */
+
+@keyframes float {
+  0% {
+    transform: translateY(0) rotate(0deg) scale(0.8);
+    opacity: 0;
+  }
+  5% {
+    opacity: var(--float-opacity, 0.4);
+  }
+  95% {
+    opacity: calc(var(--float-opacity, 0.4) * 0.6);
+  }
+  100% {
+    transform: translateY(-120vh) rotate(720deg) scale(0.4);
+    opacity: 0;
+  }
+}
+
+.animate-float {
+  animation: float linear infinite;
+  --float-opacity: 0.35;
+}
+
+/* ==========================================
+   CONFETTI ANIMATIONS
+   ========================================== */
+
+@keyframes confetti-fall {
+  0% {
+    transform: translateY(-10vh) rotate(0deg) scale(0.5);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+    transform: translateY(0) rotate(180deg) scale(1);
+  }
+  90% {
+    opacity: 0.6;
+  }
+  100% {
+    transform: translateY(110vh) rotate(1080deg) scale(0.6);
+    opacity: 0;
+  }
+}
+
+.animate-confetti {
+  animation: confetti-fall linear infinite;
+}
+
+@keyframes mini-confetti {
+  0%, 100% {
+    transform: translate(0, 0) scale(0);
+    opacity: 0;
+  }
+  50% {
+    transform: translate(var(--tw-translate-x, 20px), var(--tw-translate-y, -20px)) scale(1);
+    opacity: 1;
+  }
+}
+
+.animate-mini-confetti {
+  animation: mini-confetti 2s ease-in-out infinite;
+  --tw-translate-x: 15px;
+  --tw-translate-y: -25px;
+}
+
+/* ==========================================
+   BEAR ANIMATIONS
+   ========================================== */
+
+@keyframes bounce-gentle {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
+}
+
+.animate-bounce-gentle {
+  animation: bounce-gentle 2s ease-in-out infinite;
+}
+
+@keyframes wobble {
+  0%, 100% {
+    transform: rotate(-4deg);
+  }
+  50% {
+    transform: rotate(4deg);
+  }
+}
+
+.animate-wobble {
+  animation: wobble 1.2s ease-in-out infinite;
+}
+
+@keyframes tremble {
+  0%, 100% {
+    transform: translate(0, 0) rotate(0);
+  }
+  20% {
+    transform: translate(-2px, 1px) rotate(-2deg);
+  }
+  40% {
+    transform: translate(2px, -1px) rotate(2deg);
+  }
+  60% {
+    transform: translate(-1px, -2px) rotate(-1deg);
+  }
+  80% {
+    transform: translate(1px, 2px) rotate(1deg);
+  }
+}
+
+.animate-tremble {
+  animation: tremble 0.15s linear infinite;
+}
+
+/* Tear animations */
+@keyframes tear-l {
+  0% {
+    transform: translateY(0);
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.6;
+  }
+  100% {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+}
+
+@keyframes tear-r {
+  0% {
+    transform: translateY(0);
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.6;
+  }
+  100% {
+    transform: translateY(35px);
+    opacity: 0;
+  }
+}
+
+.animate-tear-l {
+  animation: tear-l 1.5s ease-in-out infinite;
+}
+
+.animate-tear-r {
+  animation: tear-r 1.8s ease-in-out infinite 0.3s;
+}
+
+/* ==========================================
+   NO BUTTON PANIC ANIMATIONS
+   ========================================== */
+
+@keyframes tilt {
+  0% {
+    transform: rotate(-8deg);
+  }
+  100% {
+    transform: rotate(8deg);
+  }
+}
+
+.animate-tilt {
+  animation: tilt 0.6s ease-in-out infinite alternate;
+}
+
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 0.8s linear infinite, tremble 0.1s linear infinite;
+}
+
+@keyframes panic {
+  0% {
+    transform: translate(0, 0) rotate(0deg) scale(1);
+  }
+  20% {
+    transform: translate(-4px, 3px) rotate(-20deg) scale(1.1);
+  }
+  40% {
+    transform: translate(4px, -3px) rotate(20deg) scale(0.9);
+  }
+  60% {
+    transform: translate(-3px, -4px) rotate(-15deg) scale(1.05);
+  }
+  80% {
+    transform: translate(3px, 4px) rotate(15deg) scale(0.95);
+  }
+  100% {
+    transform: translate(0, 0) rotate(0deg) scale(1);
+  }
+}
+
+.animate-panic {
+  animation: panic 0.25s linear infinite;
+}
+
+/* Split button animations */
+@keyframes split-left {
+  0% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-40px);
+    opacity: 0;
+  }
+}
+
+@keyframes split-right {
+  0% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(40px);
+    opacity: 0;
+  }
+}
+
+.animate-split-left {
+  animation: split-left 0.5s ease-out forwards;
+}
+
+.animate-split-right {
+  animation: split-right 0.5s ease-out forwards;
+}
+
+/* ==========================================
+   YES BUTTON EFFECTS
+   ========================================== */
+
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(255, 64, 129, 0.4), 0 0 40px rgba(255, 64, 129, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(255, 64, 129, 0.8), 0 0 80px rgba(255, 64, 129, 0.4);
+  }
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.animate-shimmer {
+  animation: shimmer 2s infinite;
+}
+
+/* ==========================================
+   UI ANIMATIONS
+   ========================================== */
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.5s ease-out forwards;
+}
+
+@keyframes fade-scale {
+  from {
+    opacity: 0;
+    transform: scale(0.85);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-fade-scale {
+  animation: fade-scale 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes pop {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.15);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.animate-pop {
+  animation: pop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+@keyframes shake {
+  0%, 100% {
+    transform: translateX(0) rotate(0);
+  }
+  10% {
+    transform: translateX(-8px) rotate(-2deg);
+  }
+  20% {
+    transform: translateX(8px) rotate(2deg);
+  }
+  30% {
+    transform: translateX(-5px) rotate(-1deg);
+  }
+  40% {
+    transform: translateX(5px) rotate(1deg);
+  }
+  50% {
+    transform: translateX(-3px);
+  }
+}
+
+.animate-shake {
+  animation: shake 0.5s ease-out;
+}
+
+@keyframes pulse-ring {
+  0% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(1.6);
+    opacity: 0;
+  }
+}
+
+.animate-pulse-ring {
+  animation: pulse-ring 1.5s ease-out infinite;
+}
+
+@keyframes fade-out {
+  0% {
+    opacity: 0.8;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+}
+
+.animate-fade-out {
+  animation: fade-out 1s ease-out forwards;
+}
+
+/* Boss appear animation */
+@keyframes boss-appear {
+  0% {
+    transform: scale(4) rotate(-15deg);
+    opacity: 0;
+    filter: blur(10px);
+  }
+  40% {
+    transform: scale(0.9) rotate(3deg);
+    opacity: 1;
+    filter: blur(0);
+  }
+  60% {
+    transform: scale(1.05) rotate(-2deg);
+  }
+  80% {
+    transform: scale(0.98) rotate(1deg);
+  }
+  100% {
+    transform: scale(1) rotate(0);
+    opacity: 1;
+  }
+}
+
+.animate-boss-appear {
+  animation: boss-appear 1s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+}
+
+/* ==========================================
+   PULSE ANIMATION
+   ========================================== */
+
+@keyframes pulse-heart {
+  0%, 100% {
+    transform: scale(1);
+  }
+  15% {
+    transform: scale(1.4);
+  }
+  30% {
+    transform: scale(1);
+  }
+  45% {
+    transform: scale(1.25);
+  }
+  60% {
+    transform: scale(1);
+  }
+}
+
+.animate-pulse {
+  animation: pulse-heart 1.3s ease-in-out infinite;
+}
+
+/* ==========================================
+   BOUNCE ANIMATION
+   ========================================== */
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+    animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+  }
+  50% {
+    transform: translateY(-30%);
+    animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  }
+}
+
+.animate-bounce {
+  animation: bounce 1s infinite;
+}
+
+/* ==========================================
+   REDUCED MOTION SUPPORT
+   ========================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  
+  .animate-float,
+  .animate-confetti,
+  .animate-tilt,
+  .animate-tremble,
+  .animate-spin-slow,
+  .animate-panic,
+  .animate-wobble,
+  .animate-bounce,
+  .animate-bounce-gentle,
+  .animate-pulse,
+  .animate-pulse-glow,
+  .animate-shimmer,
+  .animate-pulse-ring,
+  .bg-gradient-valentine,
+  .bg-gradient-party {
+    animation: none !important;
+  }
+}
+
+/* ==========================================
+   FOCUS STYLES
+   ========================================== */
+
+:focus-visible {
+  outline: 3px solid #FF4081;
+  outline-offset: 3px;
+  border-radius: 0.5rem;
+}
+
+button:focus-visible {
+  outline: 3px solid #FF4081;
+  outline-offset: 3px;
+}
+
+/* ==========================================
+   SELECTION STYLING
+   ========================================== */
+
+::selection {
+  background: rgba(255, 64, 129, 0.3);
+  color: inherit;
+}
+
+/* ==========================================
+   SCROLLBAR STYLING
+   ========================================== */
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 154, 158, 0.5);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 154, 158, 0.8);
+}
+
+/* ==========================================
+   TOOLTIP STYLES
+   ========================================== */
+
+[data-tooltip] {
+  position: relative;
+}
+
+[data-tooltip]::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 6px 12px;
+  background: rgba(0, 0, 0, 0.85);
+  color: white;
+  font-size: 12px;
+  border-radius: 6px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s, transform 0.2s;
+  font-family: var(--font-handwritten), cursive;
+  z-index: 100;
+}
+
+[data-tooltip]:hover::after {
+  opacity: 1;
+  transform: translateX(-50%) translateY(-4px);
+}
+
+/* ==========================================
+   RANGE INPUT STYLING
+   ========================================== */
+
+input[type="range"] {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 8px;
+  background: linear-gradient(to right, #fce7f3, #fbcfe8);
+  border-radius: 4px;
+  outline: none;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 24px;
+  height: 24px;
+  background: linear-gradient(135deg, #ec4899, #be185d);
+  border-radius: 50%;
+  cursor: grab;
+  box-shadow: 0 2px 6px rgba(236, 72, 153, 0.4);
+  transition: transform 0.1s, box-shadow 0.1s;
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(236, 72, 153, 0.5);
+}
+
+input[type="range"]::-webkit-slider-thumb:active {
+  cursor: grabbing;
+  transform: scale(0.95);
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 24px;
+  height: 24px;
+  background: linear-gradient(135deg, #ec4899, #be185d);
+  border-radius: 50%;
+  cursor: grab;
+  border: none;
+  box-shadow: 0 2px 6px rgba(236, 72, 153, 0.4);
+}
+
+/* ==========================================
+   CHECKBOX STYLING
+   ========================================== */
+
+input[type="checkbox"] {
+  accent-color: #ec4899;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+/* ==========================================
+   UTILITY CLASSES
+   ========================================== */
+
+.cursor-grab {
+  cursor: grab;
+}
+
+.cursor-grabbing {
+  cursor: grabbing;
+}
+
+/* Glass morphism enhancement */
+.glass {
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* Text gradient */
+.text-gradient {
+  background: linear-gradient(135deg, #ec4899, #be185d);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Shadow utilities */
+.shadow-glow {
+  box-shadow: 0 0 20px rgba(255, 64, 129, 0.4);
+}
+
+.shadow-glow-lg {
+  box-shadow: 0 0 40px rgba(255, 64, 129, 0.6);
+}
