@@ -1,53 +1,71 @@
-# Will You Be My Valentine?
+# valentine-meme-web
 
-An interactive "will-you-be-my-valentine" meme. The **No** button morphs through 27 stages — splits in two, runs away, fakes a Yes, becomes draggable, turns into a slider, then a checkbox — until **Yes** is the only option left.
+A meme web app: "Will You Be My Valentine?" — the **No** button morphs through 27 stages (splits, runs, fakes, becomes draggable, slider, checkbox) until **Yes** is the only option.
+
+Live: https://valentine-meme.vercel.app
 
 ## Stack
 
-- Next.js 16 (App Router, Turbopack), React 19, TypeScript
-- Tailwind CSS v4
-- Type-safe env via `@t3-oss/env-nextjs` + Zod
-- Vitest + Testing Library
-- Prettier, ESLint, Husky pre-commit hooks
-- Docker multi-stage build
+- **Astro 5** (static output) — page shell
+- **React 19** as an Astro island for the morphing button (`client:load`)
+- **Tailwind CSS v4** via `@tailwindcss/vite`
+- **TypeScript** strict mode
+- **pnpm** for package management
+- **Vercel adapter** (`@astrojs/vercel`) for deploy
+- **Vitest** + Testing Library for tests
+- **`astro:env`** for type-safe env vars
 
-## Quickstart
+## Structure
 
-```bash
-pnpm install
-pnpm dev
 ```
-
-Open [http://localhost:3000](http://localhost:3000).
+valentine-meme-web/
+├── src/
+│   ├── components/
+│   │   └── MorphButton.tsx     # The 27-stage React island
+│   ├── layouts/
+│   │   └── Layout.astro        # Static HTML shell, fonts, meta
+│   ├── pages/
+│   │   ├── index.astro         # Static page mounting <MorphButton client:load />
+│   │   └── 404.astro           # Not-found page
+│   └── styles/
+│       └── globals.css         # Tailwind + custom animations
+├── public/                     # favicon and static assets
+├── astro.config.mjs
+├── Dockerfile                  # Multi-stage; static dist served by nginx
+├── tsconfig.json
+├── vitest.config.ts
+└── package.json
+```
 
 ## Scripts
 
 ```bash
-pnpm dev              # next dev --turbopack
-pnpm build            # next build --turbopack
-pnpm start            # next start
-pnpm lint
-pnpm format
-pnpm format:check
-pnpm typecheck
-pnpm test             # vitest
-pnpm test:watch
-pnpm test:coverage
-pnpm test:ui
-pnpm analyze          # ANALYZE=true next build
+pnpm dev         # astro dev
+pnpm build       # astro build  (outputs ./dist)
+pnpm preview     # astro preview
+pnpm test        # vitest run
+pnpm typecheck   # astro check && tsc --noEmit
+pnpm lint        # eslint
+pnpm format      # prettier --write
 ```
+
+## Environment
+
+Defined via `astro:env` in `astro.config.mjs`:
+
+| Var              | Type   | Default                 | Notes                           |
+| ---------------- | ------ | ----------------------- | ------------------------------- |
+| `PUBLIC_APP_URL` | string | `http://localhost:4321` | Used for OG metadata canonical. |
 
 ## Docker
 
 ```bash
 docker build -t valentine-meme-web .
-docker run -p 3000:3000 valentine-meme-web
+docker run -p 8080:80 valentine-meme-web
 ```
 
-## Docs
+The image builds the static `dist/` and serves it via nginx.
 
-The `docs/` folder covers bundle optimization, code style, hooks, naming conventions, parallel routes, performance patterns, runtime selection, time utilities, and Docker setup.
+## Why Astro?
 
-## License
-
-MIT
+Only one piece of the page needs to be interactive — the morph button — and Astro lets the rest ship as zero-JS static HTML. The React island is hydrated with `client:load` so all 27 stages run identically to the previous Next.js implementation.
