@@ -1,4 +1,4 @@
-# Vercel deployment workflow.
+# Cloudflare Pages deployment workflow.
 #
 # Currently DISABLED for automatic triggers — only fires when manually run from
 # the GitHub UI. To enable on push, uncomment the `push:` block below.
@@ -17,10 +17,11 @@ on:
           - production
           - development
   # push:
-  #   branches: [release]
+  #   branches: [main]
 
 permissions:
   contents: read
+  deployments: write
 
 jobs:
   deploy:
@@ -38,19 +39,16 @@ jobs:
           node-version: 20
           cache: pnpm
 
-      - run: pnpm install --frozen-lockfile
-
       - name: Deploy
         run: |
-          # Reconstruct the deploy env file from secrets so scripts/deploy.sh works the same locally and in CI.
           cat > ".env.deploy.${ENV}" <<EOF
-          VERCEL_TOKEN=${VERCEL_TOKEN}
-          VERCEL_SCOPE=${VERCEL_SCOPE}
-          VERCEL_PROJECT_ID=${VERCEL_PROJECT_ID}
+          CLOUDFLARE_ACCOUNT_ID=${CLOUDFLARE_ACCOUNT_ID}
+          CLOUDFLARE_API_TOKEN=${CLOUDFLARE_API_TOKEN}
+          CF_PROJECT_NAME=${CF_PROJECT_NAME}
           EOF
           bash scripts/deploy.sh "$ENV"
         env:
           ENV: ${{ inputs.environment || 'production' }}
-          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-          VERCEL_SCOPE: ${{ secrets.VERCEL_SCOPE }}
-          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CF_PROJECT_NAME: ${{ vars.CF_PROJECT_NAME }}

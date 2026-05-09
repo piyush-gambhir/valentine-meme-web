@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Local Vercel deploy. Run as `bash scripts/deploy.sh [production|development]`.
+# Local Cloudflare Pages deploy. Run as `bash scripts/deploy.sh [production|development]`.
 #
 # Reads credentials from .env.deploy.<env> (gitignored).
 # See .env.deploy.example for the full list.
@@ -18,25 +18,36 @@ if [[ ! -f "$DEPLOY_ENV_FILE" ]]; then
   exit 1
 fi
 
-# Load deploy creds (and don't echo them)
 set -a
 # shellcheck disable=SC1090
 source "$DEPLOY_ENV_FILE"
 set +a
 
-: "${VERCEL_TOKEN:?set VERCEL_TOKEN in ${DEPLOY_ENV_FILE}}"
-: "${VERCEL_SCOPE:?set VERCEL_SCOPE in ${DEPLOY_ENV_FILE}}"
+: "${CLOUDFLARE_ACCOUNT_ID:?set CLOUDFLARE_ACCOUNT_ID in ${DEPLOY_ENV_FILE}}"
+: "${CLOUDFLARE_API_TOKEN:?set CLOUDFLARE_API_TOKEN in ${DEPLOY_ENV_FILE}}"
+: "${CF_PROJECT_NAME:?set CF_PROJECT_NAME in ${DEPLOY_ENV_FILE}}"
 
-VERCEL_FLAGS=(
-  --token "$VERCEL_TOKEN"
-  --scope "$VERCEL_SCOPE"
-  --yes
-)
+BUILD_DIR="${BUILD_DIR:-dist}"
 
-if [[ "$ENV" == "production" ]]; then
-  echo "==> Deploying to production via Vercel ($VERCEL_SCOPE)"
-  npx --yes vercel@latest deploy --prod "${VERCEL_FLAGS[@]}"
-else
-  echo "==> Deploying preview to Vercel ($VERCEL_SCOPE)"
-  npx --yes vercel@latest deploy "${VERCEL_FLAGS[@]}"
+echo "==> Building site"
+pnpm install --frozen-lockfile
+pnpm build
+
+if [[ ! -d "$BUILD_DIR" ]]; then
+  echo "error: build directory ${BUILD_DIR} not found after build" >&2
+  exit 1
 fi
+
+# Cloudflare Pages "branch" determines preview vs prod alias. Anything other
+# than the project's production branch is treated as a preview.
+if [[ "$ENV" == "production" ]]; then
+  CF_BRANCH="${CF_PRODUCTION_BRANCH:-main}"
+else
+  CF_BRANCH="${CF_PREVIEW_BRANCH:-preview}"
+fi
+
+echo "==> Deploying ${BUILD_DIR}/ to Cloudflare Pages project '${CF_PROJECT_NAME}' (branch: ${CF_BRANCH})"
+export CLOUDFLARE_ACCOUNT_ID CLOUDFLARE_API_TOKEN
+npx --yes wrangler@latest pages deploy "$BUILD_DIR" \
+  --project-name="$CF_PROJECT_NAME" \
+  --branch="$CF_BRANCH"
