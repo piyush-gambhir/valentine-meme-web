@@ -1,0 +1,77 @@
+---
+import '../styles/globals.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = 'Will you be my Valentine?',
+  description = 'I have a very important question to ask you...',
+} = Astro.props;
+
+const appUrl = import.meta.env.PUBLIC_APP_URL ?? 'http://localhost:4321';
+const ogUrl = new URL('/', appUrl).toString();
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+    />
+    <meta
+      name="theme-color"
+      content="#FF9A9E"
+    />
+    <meta
+      name="description"
+      content={description}
+    />
+
+    <link
+      rel="icon"
+      href="/favicon.ico"
+      sizes="any"
+    />
+
+    <meta
+      property="og:type"
+      content="website"
+    />
+    <meta
+      property="og:url"
+      content={ogUrl}
+    />
+    <meta
+      property="og:title"
+      content="Will you be my Valentine?"
+    />
+    <meta
+      property="og:description"
+      content="Someone has a very important question for you..."
+    />
+
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Geist+Mono:wght@100..900&family=Instrument+Serif&family=Caveat:wght@400..700&display=swap"
+    />
+
+    <title>{title}</title>
+  </head>
+  <body class="antialiased">
+    <slot />
+  </body>
+</html>

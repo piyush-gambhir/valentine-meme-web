@@ -1,32 +1,23 @@
-import nextPlugin from "@next/eslint-plugin-next";
-import reactPlugin from "eslint-plugin-react";
-import hooksPlugin from "eslint-plugin-react-hooks";
-import tseslint from "typescript-eslint";
+import astroPlugin from 'eslint-plugin-astro';
+import hooksPlugin from 'eslint-plugin-react-hooks';
+import tseslint from 'typescript-eslint';
 
 export default tseslint.config(
   {
-    ignores: ["node_modules/**", ".next/**", "out/**", "build/**"],
+    ignores: ['node_modules/**', 'dist/**', '.astro/**', '.vercel/**', 'build/**'],
   },
+  ...tseslint.configs.recommended,
+  ...astroPlugin.configs.recommended,
   {
-    files: ["**/*.{ts,tsx,js,jsx}"],
+    files: ['**/*.{ts,tsx,js,jsx}'],
     plugins: {
-      "@next/next": nextPlugin,
-      react: reactPlugin,
-      "react-hooks": hooksPlugin,
+      'react-hooks': hooksPlugin,
     },
     rules: {
-      ...nextPlugin.configs.recommended.rules,
-      ...nextPlugin.configs["core-web-vitals"].rules,
-      ...reactPlugin.configs.recommended.rules,
-      ...hooksPlugin.configs.recommended.rules,
-      "react/react-in-jsx-scope": "off",
-      "react/prop-types": "off",
-    },
-    settings: {
-      react: {
-        version: "detect",
-      },
+      'react-hooks/rules-of-hooks': 'error',
+      'react-hooks/exhaustive-deps': 'warn',
+      '@typescript-eslint/no-unused-vars': 'warn',
+      '@typescript-eslint/no-explicit-any': 'warn',
     },
   },
-  ...tseslint.configs.recommended
 );

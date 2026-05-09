@@ -13,9 +13,9 @@
 # testing
 /coverage
 
-# next.js
-/.next/
-/out/
+# astro
+/dist/
+/.astro/
 
 # production
 /build
@@ -38,7 +38,6 @@ yarn-error.log*
 
 # typescript
 *.tsbuildinfo
-next-env.d.ts
 
 # AI IDE configurations (optional - uncomment if you don't want to track these)
 # .cursor/

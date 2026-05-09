@@ -41,10 +41,19 @@
   "tailwindPreserveDuplicates": false,
   "plugins": [
     "@ianvs/prettier-plugin-sort-imports",
+    "prettier-plugin-astro",
     "prettier-plugin-jsdoc",
     "prettier-plugin-sort-json",
     "prettier-plugin-packagejson",
     "prettier-plugin-tailwindcss"
+  ],
+  "overrides": [
+    {
+      "files": "*.astro",
+      "options": {
+        "parser": "astro"
+      }
+    }
   ]
 }
 
