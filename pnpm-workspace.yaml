@@ -1,4 +1,6 @@
-onlyBuiltDependencies:
-  - esbuild
-  - sharp
-  - unrs-resolver
+allowBuilds:
+  esbuild: true
+  sharp: true
+  unrs-resolver: true
+overrides:
+  '@vercel/routing-utils>path-to-regexp': 6.3.0
