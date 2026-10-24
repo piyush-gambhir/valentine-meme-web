@@ -1,7 +1,7 @@
 # Multi-stage Dockerfile for Astro (static output, served by nginx)
 # Optimized for caching and minimal image size
 
-FROM node:24.21.0-alpine AS base
+FROM node:24.22.1-alpine AS base
 WORKDIR /app
 ENV PNPM_HOME=/pnpm
 ENV PATH="$PNPM_HOME:$PATH"
