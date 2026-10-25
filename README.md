@@ -2,7 +2,7 @@
 
 A Valentine web app whose No button changes through 27 stages before acceptance. Astro 7 provides the static pages; a React 19 island handles interaction.
 
-Live: https://valentine-meme.vercel.app
+Live: https://valentine-meme.pages.dev
 
 ## Development
 
