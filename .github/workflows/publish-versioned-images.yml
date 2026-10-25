@@ -2,7 +2,7 @@ name: Publish versioned containers
 'on':
   push:
     tags:
-    - v*
+      - v*
   workflow_dispatch: null
 permissions:
   contents: read
@@ -15,9 +15,9 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 2
     steps:
-    - env:
-        TAG: ${{ github.ref_name }}
-      run: '[[ "$TAG" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]'
+      - env:
+          TAG: ${{ github.ref_name }}
+        run: '[[ "$TAG" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]'
   publish:
     needs: validate
     strategy:
@@ -25,9 +25,9 @@ jobs:
       max-parallel: 2
       matrix:
         include:
-        - image: valentine-meme-web
-          dockerfile: Dockerfile
-          context: .
+          - image: valentine-meme-web
+            dockerfile: Dockerfile
+            context: .
     uses: docker/github-builder/.github/workflows/build.yml@cbc9d42f8c89a55623392aadd03600965b80e963
     permissions:
       contents: read
