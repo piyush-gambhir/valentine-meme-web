@@ -1,71 +1,38 @@
-# valentine-meme-web
+# Valentine Meme Web
 
-A meme web app: "Will You Be My Valentine?" — the **No** button morphs through 27 stages (splits, runs, fakes, becomes draggable, slider, checkbox) until **Yes** is the only option.
+A Valentine web app whose No button changes through 27 stages before acceptance. Astro 7 provides the static pages; a React 19 island handles interaction.
 
-Live: https://valentine-meme.vercel.app
+Live: https://valentine-meme.pages.dev
 
-## Stack
+## Development
 
-- **Astro 5** (static output) — page shell
-- **React 19** as an Astro island for the morphing button (`client:load`)
-- **Tailwind CSS v4** via `@tailwindcss/vite`
-- **TypeScript** strict mode
-- **pnpm** for package management
-- **Vercel adapter** (`@astrojs/vercel`) for deploy
-- **Vitest** + Testing Library for tests
-- **`astro:env`** for type-safe env vars
+Use Node 26.12.1 and pnpm 12.15.0. Node 24.22.1 remains supported for Vercel hosting.
 
-## Structure
-
-```
-valentine-meme-web/
-├── src/
-│   ├── components/
-│   │   └── MorphButton.tsx     # The 27-stage React island
-│   ├── layouts/
-│   │   └── Layout.astro        # Static HTML shell, fonts, meta
-│   ├── pages/
-│   │   ├── index.astro         # Static page mounting <MorphButton client:load />
-│   │   └── 404.astro           # Not-found page
-│   └── styles/
-│       └── globals.css         # Tailwind + custom animations
-├── public/                     # favicon and static assets
-├── astro.config.mjs
-├── Dockerfile                  # Multi-stage; static dist served by nginx
-├── tsconfig.json
-├── vitest.config.ts
-└── package.json
+```sh
+pnpm install --frozen-lockfile
+pnpm dev
+pnpm lint
+pnpm format:check
+pnpm typecheck
+pnpm build
+pnpm preview
 ```
 
-## Scripts
-
-```bash
-pnpm dev         # astro dev
-pnpm build       # astro build  (outputs ./dist)
-pnpm preview     # astro preview
-pnpm test        # vitest run
-pnpm typecheck   # astro check && tsc --noEmit
-pnpm lint        # eslint
-pnpm format      # prettier --write
-```
-
-## Environment
-
-Defined via `astro:env` in `astro.config.mjs`:
-
-| Var              | Type   | Default                 | Notes                           |
-| ---------------- | ------ | ----------------------- | ------------------------------- |
-| `PUBLIC_APP_URL` | string | `http://localhost:4321` | Used for OG metadata canonical. |
+`PUBLIC_APP_URL` sets the canonical/OG origin and defaults to `http://localhost:4321`. TypeScript 7 runs through an explicit checker path; TypeScript 6 remains for Astro and typed ESLint APIs.
 
 ## Docker
 
-```bash
+```sh
 docker build -t valentine-meme-web .
 docker run -p 8080:80 valentine-meme-web
 ```
 
-The image builds the static `dist/` and serves it via nginx.
+The Node 26 build emits static files served by nginx. An isolated browser against the image verifies hydration, keyboard refusal, acceptance, attempt count and reload reset without page errors. Font CSS was supplied locally during verification; no provider calls were made.
 
-## Why Astro?
+## Upgrade verification
 
-Only one piece of the page needs to be interactive — the morph button — and Astro lets the rest ship as zero-JS static HTML. The React island is hydrated with `client:load` so all 27 stages run identically to the previous Next.js implementation.
+Node 24 and 26 checks/builds pass. Full and production dependency audits report zero advisories after the bounded fast-uri security floor. CI now checks real lint, formatting, types and builds on both runtimes. The unused test scaffold and its dependencies were removed because no test cases existed; no unit-test coverage is claimed.
+
+Existing formatting debt was repaired in a separate mechanical commit. Verification confirmed the 90 Markdown documents preserve instructions, metadata and links, checked 493 fenced examples, and confirmed the application TSX AST is unchanged. No formatting gate was disabled. Obsolete ignored formatter options were removed.
+
+The existing release-age policy retains prettier-plugin-packagejson 3.0.2 until 3.0.3 is eligible. Existing lint warnings remain. Deployment stays manual, and no processing speedup was measured.

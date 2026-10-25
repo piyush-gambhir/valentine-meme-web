@@ -1,12 +1,12 @@
 # Multi-stage Dockerfile for Astro (static output, served by nginx)
 # Optimized for caching and minimal image size
 
-FROM node:24.22.1-alpine AS base
+FROM node:26.12.1-alpine AS base
 WORKDIR /app
 ENV PNPM_HOME=/pnpm
 ENV PATH="$PNPM_HOME:$PATH"
 RUN apk add --no-cache libc6-compat \
-  && corepack enable && corepack prepare pnpm@12.11.2 --activate
+  && npm install --global pnpm@12.15.0
 
 # Install dependencies (separate layer for better caching)
 FROM base AS deps

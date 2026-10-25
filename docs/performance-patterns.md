@@ -7,6 +7,7 @@ Advanced patterns for optimizing React and Next.js applications based on Vercel 
 The `after()` API allows you to schedule work to be executed after a response is sent, without blocking the user's request.
 
 ### Use Cases
+
 - Analytics and logging
 - Background data processing
 - Cleanup tasks
@@ -59,6 +60,7 @@ export async function POST(request: Request) {
 ```
 
 ### Benefits
+
 - Faster response times
 - Better user experience
 - Cleaner separation of critical vs. non-critical work
@@ -71,6 +73,7 @@ export async function POST(request: Request) {
 React's `startTransition` marks updates as non-urgent, allowing React to keep the UI responsive during heavy updates.
 
 ### Use Cases
+
 - Search filtering large lists
 - Tab switching with heavy content
 - Route transitions
@@ -93,9 +96,7 @@ export default function SearchableList({ items }: { items: string[] }) {
 
     // Filter list in transition (non-urgent)
     startTransition(() => {
-      const filtered = items.filter((item) =>
-        item.toLowerCase().includes(value.toLowerCase())
-      );
+      const filtered = items.filter((item) => item.toLowerCase().includes(value.toLowerCase()));
       setFilteredItems(filtered);
     });
   };
@@ -157,6 +158,7 @@ export default function TabsWithLoading() {
 ```
 
 ### Benefits
+
 - Keeps input responsive during heavy updates
 - Prevents UI freezing
 - Better perceived performance
@@ -214,18 +216,21 @@ export default function OptimizedSearch() {
 ## 4. Performance Checklist
 
 ### Server-Side
+
 - ✅ Use `after()` for analytics, logging, and cleanup
 - ✅ Use `React.cache()` for request deduplication
 - ✅ Implement proper error boundaries
 - ✅ Minimize data sent to client components
 
 ### Client-Side
+
 - ✅ Use `startTransition` for non-urgent updates
 - ✅ Use `useDeferredValue` for derived values
 - ✅ Implement proper loading states with `useTransition`
 - ✅ Avoid unnecessary re-renders with `memo`, `useMemo`, `useCallback`
 
 ### Bundle Optimization
+
 - ✅ Use dynamic imports for heavy components
 - ✅ Avoid barrel exports (import directly)
 - ✅ Defer third-party scripts

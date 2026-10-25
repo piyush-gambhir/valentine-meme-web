@@ -7,14 +7,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 type Mood = 'love' | 'hopeful' | 'worried' | 'crying' | 'dead';
 type Stage = 'intro' | 'playful' | 'persuasion' | 'chaos' | 'boss';
 type NoMode =
-  | 'button'
-  | 'split'
-  | 'fake'
-  | 'loading'
-  | 'slider'
-  | 'checkbox'
-  | 'link'
-  | 'draggable';
+  'button' | 'split' | 'fake' | 'loading' | 'slider' | 'checkbox' | 'link' | 'draggable';
 type EndingStyle = 'romantic' | 'corporate' | 'dramatic' | 'absurd' | 'anime';
 
 interface Position {
