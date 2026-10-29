@@ -6,24 +6,24 @@ updates:
       interval: weekly
     groups:
       github-actions:
-        patterns: ["*"]
+        patterns: ['*']
   - package-ecosystem: docker
     directories:
-      - "/"
+      - '/'
     schedule:
       interval: weekly
     open-pull-requests-limit: 3
     groups:
       dependencies:
-        patterns: ["*"]
+        patterns: ['*']
         update-types: [minor, patch]
   - package-ecosystem: npm
     directories:
-      - "/"
+      - '/'
     schedule:
       interval: weekly
     open-pull-requests-limit: 3
     groups:
       dependencies:
-        patterns: ["*"]
+        patterns: ['*']
         update-types: [minor, patch]
