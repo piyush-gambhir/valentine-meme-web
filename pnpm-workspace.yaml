@@ -3,6 +3,7 @@ allowBuilds:
   sharp: true
   unrs-resolver: true
 overrides:
+  '@astrojs/astro2tsx': 0.1.4
   '@vercel/routing-utils>path-to-regexp': 6.3.0
   zod@>=4.0.0 <4.6.7: 4.6.7
   fast-uri@>=3.0.0 <3.1.9: 3.1.9
