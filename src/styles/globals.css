@@ -32,10 +32,6 @@ body {
   overflow: hidden;
 }
 
-/* ==========================================
-   FONT UTILITIES
-   ========================================== */
-
 .font-display {
   font-family: var(--font-display), Georgia, serif;
 }
@@ -43,10 +39,6 @@ body {
 .font-hand {
   font-family: var(--font-handwritten), 'Comic Sans MS', cursive;
 }
-
-/* ==========================================
-   GRADIENT BACKGROUNDS
-   ========================================== */
 
 .bg-gradient-valentine {
   background: linear-gradient(
@@ -85,10 +77,6 @@ body {
   }
 }
 
-/* ==========================================
-   FLOATING HEARTS ANIMATION
-   ========================================== */
-
 @keyframes float {
   0% {
     transform: translateY(0) rotate(0deg) scale(0.8);
@@ -110,10 +98,6 @@ body {
   animation: float linear infinite;
   --float-opacity: 0.35;
 }
-
-/* ==========================================
-   CONFETTI ANIMATIONS
-   ========================================== */
 
 @keyframes confetti-fall {
   0% {
@@ -154,10 +138,6 @@ body {
   --tw-translate-x: 15px;
   --tw-translate-y: -25px;
 }
-
-/* ==========================================
-   BEAR ANIMATIONS
-   ========================================== */
 
 @keyframes bounce-gentle {
   0%,
@@ -210,7 +190,6 @@ body {
   animation: tremble 0.15s linear infinite;
 }
 
-/* Tear animations */
 @keyframes tear-l {
   0% {
     transform: translateY(0);
@@ -246,10 +225,6 @@ body {
 .animate-tear-r {
   animation: tear-r 1.8s ease-in-out infinite 0.3s;
 }
-
-/* ==========================================
-   NO BUTTON PANIC ANIMATIONS
-   ========================================== */
 
 @keyframes tilt {
   0% {
@@ -304,7 +279,6 @@ body {
   animation: panic 0.25s linear infinite;
 }
 
-/* Split button animations */
 @keyframes split-left {
   0% {
     transform: translateX(0);
@@ -334,10 +308,6 @@ body {
 .animate-split-right {
   animation: split-right 0.5s ease-out forwards;
 }
-
-/* ==========================================
-   YES BUTTON EFFECTS
-   ========================================== */
 
 @keyframes pulse-glow {
   0%,
@@ -369,10 +339,6 @@ body {
 .animate-shimmer {
   animation: shimmer 2s infinite;
 }
-
-/* ==========================================
-   UI ANIMATIONS
-   ========================================== */
 
 @keyframes fade-in {
   from {
@@ -478,7 +444,6 @@ body {
   animation: fade-out 1s ease-out forwards;
 }
 
-/* Boss appear animation */
 @keyframes boss-appear {
   0% {
     transform: scale(4) rotate(-15deg);
@@ -506,10 +471,6 @@ body {
   animation: boss-appear 1s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
 }
 
-/* ==========================================
-   PULSE ANIMATION
-   ========================================== */
-
 @keyframes pulse-heart {
   0%,
   100% {
@@ -533,10 +494,6 @@ body {
   animation: pulse-heart 1.3s ease-in-out infinite;
 }
 
-/* ==========================================
-   BOUNCE ANIMATION
-   ========================================== */
-
 @keyframes bounce {
   0%,
   100% {
@@ -552,10 +509,6 @@ body {
 .animate-bounce {
   animation: bounce 1s infinite;
 }
-
-/* ==========================================
-   REDUCED MOTION SUPPORT
-   ========================================== */
 
 @media (prefers-reduced-motion: reduce) {
   *,
@@ -586,10 +539,6 @@ body {
   }
 }
 
-/* ==========================================
-   FOCUS STYLES
-   ========================================== */
-
 :focus-visible {
   outline: 3px solid #ff4081;
   outline-offset: 3px;
@@ -601,18 +550,10 @@ button:focus-visible {
   outline-offset: 3px;
 }
 
-/* ==========================================
-   SELECTION STYLING
-   ========================================== */
-
 ::selection {
   background: rgba(255, 64, 129, 0.3);
   color: inherit;
 }
-
-/* ==========================================
-   SCROLLBAR STYLING
-   ========================================== */
 
 ::-webkit-scrollbar {
   width: 8px;
@@ -631,10 +572,6 @@ button:focus-visible {
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(255, 154, 158, 0.8);
 }
-
-/* ==========================================
-   TOOLTIP STYLES
-   ========================================== */
 
 [data-tooltip] {
   position: relative;
@@ -665,10 +602,6 @@ button:focus-visible {
   opacity: 1;
   transform: translateX(-50%) translateY(-4px);
 }
-
-/* ==========================================
-   RANGE INPUT STYLING
-   ========================================== */
 
 input[type='range'] {
   -webkit-appearance: none;
@@ -712,20 +645,12 @@ input[type='range']::-moz-range-thumb {
   box-shadow: 0 2px 6px rgba(236, 72, 153, 0.4);
 }
 
-/* ==========================================
-   CHECKBOX STYLING
-   ========================================== */
-
 input[type='checkbox'] {
   accent-color: #ec4899;
   width: 20px;
   height: 20px;
   cursor: pointer;
 }
-
-/* ==========================================
-   UTILITY CLASSES
-   ========================================== */
 
 .cursor-grab {
   cursor: grab;
@@ -735,7 +660,6 @@ input[type='checkbox'] {
   cursor: grabbing;
 }
 
-/* Glass morphism enhancement */
 .glass {
   background: rgba(255, 255, 255, 0.25);
   backdrop-filter: blur(12px);
@@ -743,7 +667,6 @@ input[type='checkbox'] {
   border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
-/* Text gradient */
 .text-gradient {
   background: linear-gradient(135deg, #ec4899, #be185d);
   -webkit-background-clip: text;
@@ -751,7 +674,6 @@ input[type='checkbox'] {
   background-clip: text;
 }
 
-/* Shadow utilities */
 .shadow-glow {
   box-shadow: 0 0 20px rgba(255, 64, 129, 0.4);
 }
