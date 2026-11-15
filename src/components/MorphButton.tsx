@@ -1,9 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
-
-
-
-
 type Mood = 'love' | 'hopeful' | 'worried' | 'crying' | 'dead';
 type Stage = 'intro' | 'playful' | 'persuasion' | 'chaos' | 'boss';
 type NoMode =
@@ -20,17 +16,12 @@ interface Velocity {
   y: number;
 }
 
-
 const STAGES = {
   playful: 2,
   persuasion: 6,
   chaos: 10,
   boss: 15,
 };
-
-
-
-
 
 const NOPE_COPY = [
   'No 😐',
@@ -154,10 +145,6 @@ const ACHIEVEMENTS = [
   { at: 22, text: 'Achievement Unlocked: This Is Fine 🔥' },
 ];
 
-
-
-
-
 const BG_EMOJI = ['💕', '💗', '✨', '💘', '🌸', '💝', '🩷', '♥️', '💖', '🌺'];
 const PARTY_EMOJI = [
   '🎉',
@@ -177,10 +164,6 @@ const PARTY_EMOJI = [
 ];
 const FOOTPRINTS = ['👣', '🐾', '💔', '🚫'];
 
-
-
-
-
 function Bear({ mood, size = 'normal' }: { mood: Mood; size?: 'small' | 'normal' | 'large' }) {
   const sizeClasses = {
     small: 'w-20 h-20',
@@ -194,7 +177,6 @@ function Bear({ mood, size = 'normal' }: { mood: Mood; size?: 'small' | 'normal'
       className={`${sizeClasses[size]} transition-all duration-300`}
       xmlns="http://www.w3.org/2000/svg"
     >
-
       <circle
         cx="55"
         cy="45"
@@ -219,7 +201,6 @@ function Bear({ mood, size = 'normal' }: { mood: Mood; size?: 'small' | 'normal'
         r="16"
         fill="#EDBBAB"
       />
-
 
       <circle
         cx="100"
@@ -235,7 +216,6 @@ function Bear({ mood, size = 'normal' }: { mood: Mood; size?: 'small' | 'normal'
         fill="#E8D0B8"
       />
 
-
       <ellipse
         cx="55"
         cy="112"
@@ -253,9 +233,7 @@ function Bear({ mood, size = 'normal' }: { mood: Mood; size?: 'small' | 'normal'
         opacity="0.55"
       />
 
-
       <BearEyes mood={mood} />
-
 
       <ellipse
         cx="100"
@@ -272,7 +250,6 @@ function Bear({ mood, size = 'normal' }: { mood: Mood; size?: 'small' | 'normal'
         fill="#6B5242"
         opacity="0.5"
       />
-
 
       <BearMouth mood={mood} />
     </svg>
@@ -466,7 +443,6 @@ function BearEyes({ mood }: { mood: Mood }) {
     );
   }
 
-
   return (
     <>
       <line
@@ -546,10 +522,6 @@ function BearMouth({ mood }: { mood: Mood }) {
     />
   );
 }
-
-
-
-
 
 function FloatingHearts() {
   const items = useMemo(
@@ -693,10 +665,6 @@ function FootprintTrail({ positions }: { positions: Position[] }) {
   );
 }
 
-
-
-
-
 function getMood(attempts: number): Mood {
   if (attempts === 0) return 'love';
   if (attempts < 3) return 'hopeful';
@@ -716,10 +684,6 @@ function getStage(attempts: number): Stage {
 function clamp(value: number, min: number, max: number): number {
   return Math.min(Math.max(value, min), max);
 }
-
-
-
-
 
 function NoClone({
   x,
@@ -752,18 +716,12 @@ function NoClone({
   );
 }
 
-
-
-
-
 export default function MorphButton() {
-
   const [attempts, setAttempts] = useState(0);
   const [hasAccepted, setHasAccepted] = useState(false);
   const [ready, setReady] = useState(false);
   const [shake, setShake] = useState(false);
   const [endingIndex, setEndingIndex] = useState(0);
-
 
   const [noPos, setNoPos] = useState<Position>({ x: -9999, y: -9999 });
   const [noRotation, setNoRotation] = useState(0);
@@ -779,12 +737,10 @@ export default function MorphButton() {
   const [draggedNoPos, setDraggedNoPos] = useState<Position | null>(null);
   const [isDragging, setIsDragging] = useState(false);
 
-
   const [yesScale, setYesScale] = useState(1);
   const [yesCopies, setYesCopies] = useState(0);
   const [isFullWidth, setIsFullWidth] = useState(false);
   const [yesGlow, setYesGlow] = useState(0);
-
 
   const [cursorPos, setCursorPos] = useState<Position>({ x: 0, y: 0 });
   const [cursorVel, setCursorVel] = useState<Velocity>({ x: 0, y: 0 });
@@ -822,7 +778,6 @@ export default function MorphButton() {
   const [longPressToast, setLongPressToast] = useState(false);
   const [isSliderSnapping, setIsSliderSnapping] = useState(false);
 
-
   const noBtnRef = useRef<HTMLButtonElement>(null);
   const yesBtnRef = useRef<HTMLButtonElement>(null);
   const cardRef = useRef<HTMLDivElement>(null);
@@ -831,17 +786,14 @@ export default function MorphButton() {
   const animationRef = useRef<number | undefined>(undefined);
   const inertiaRef = useRef<{ vx: number; vy: number }>({ vx: 0, vy: 0 });
 
-
   const mood = getMood(attempts);
   const stage = getStage(attempts);
   const yesText = YEP_COPY[Math.min(attempts, YEP_COPY.length - 1)];
   const noText = NOPE_COPY[Math.min(attempts, NOPE_COPY.length - 1)];
   const showNo = attempts < NOPE_COPY.length - 1 && !showUltraYes;
 
-
   useEffect(() => {
     setReady(true);
-
 
     const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
     setIsReducedMotion(mediaQuery.matches);
@@ -849,14 +801,12 @@ export default function MorphButton() {
     const handleChange = (e: MediaQueryListEvent) => setIsReducedMotion(e.matches);
     mediaQuery.addEventListener('change', handleChange);
 
-
     setEndingIndex(Math.floor(Math.random() * ENDING_VARIANTS.length));
 
     return () => {
       mediaQuery.removeEventListener('change', handleChange);
     };
   }, []);
-
 
   useEffect(() => {
     let lastTime = Date.now();
@@ -877,7 +827,6 @@ export default function MorphButton() {
       lastTime = now;
       setIdleTime(0);
 
-
       if (!isReducedMotion && stage !== 'intro') {
         const centerX = window.innerWidth / 2;
         const centerY = window.innerHeight / 2;
@@ -892,7 +841,6 @@ export default function MorphButton() {
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, [lastCursorPos, isReducedMotion, stage]);
 
-
   useEffect(() => {
     const interval = setInterval(() => {
       const idle = Date.now() - lastMoveTime.current;
@@ -903,7 +851,6 @@ export default function MorphButton() {
     return () => clearInterval(interval);
   }, []);
 
-
   useEffect(() => {
     if (attempts < 9) return;
     const interval = setInterval(() => {
@@ -911,7 +858,6 @@ export default function MorphButton() {
     }, 1000);
     return () => clearInterval(interval);
   }, [attempts]);
-
 
   useEffect(() => {
     const konami = [
@@ -948,7 +894,6 @@ export default function MorphButton() {
     return () => window.removeEventListener('keydown', handler);
   }, []);
 
-
   useEffect(() => {
     const checkDevTools = () => {
       const threshold = 160;
@@ -962,7 +907,6 @@ export default function MorphButton() {
     window.addEventListener('resize', checkDevTools);
     return () => window.removeEventListener('resize', checkDevTools);
   }, []);
-
 
   useEffect(() => {
     let timeout: NodeJS.Timeout;
@@ -980,7 +924,6 @@ export default function MorphButton() {
       clearTimeout(timeout);
     };
   }, [stage]);
-
 
   useEffect(() => {
     let timer: NodeJS.Timeout;
@@ -1002,7 +945,6 @@ export default function MorphButton() {
     };
   }, []);
 
-
   useEffect(() => {
     if (!isDragging && (stage === 'chaos' || stage === 'boss') && noMode === 'draggable') {
       const animate = () => {
@@ -1015,7 +957,6 @@ export default function MorphButton() {
             const vh = window.innerHeight;
             let newX = prev.x + inertiaRef.current.vx;
             let newY = prev.y + inertiaRef.current.vy;
-
 
             if (newX < 20 || newX > vw - 100) {
               inertiaRef.current.vx *= -0.8;
@@ -1041,7 +982,6 @@ export default function MorphButton() {
     };
   }, [isDragging, stage, noMode]);
 
-
   useEffect(() => {
     if (attempts === 13 && !isReducedMotion) {
       setIsGravityFlipped(true);
@@ -1055,14 +995,12 @@ export default function MorphButton() {
     }
   }, [attempts, isReducedMotion]);
 
-
   useEffect(() => {
     if (attempts >= 11 && !isReducedMotion) {
       const newZoom = 1 + (attempts - 10) * 0.03;
       setZoomLevel(clamp(newZoom, 1, 1.3));
     }
   }, [attempts, isReducedMotion]);
-
 
   const teleportNo = useCallback(
     (isPanic = false) => {
@@ -1073,11 +1011,9 @@ export default function MorphButton() {
       const btnWidth = 100;
       const btnHeight = 50;
 
-
       const padding = 30;
       const maxX = vw - btnWidth - padding;
       const maxY = vh - btnHeight - padding;
-
 
       let safeZone = { left: 0, right: vw, top: 0, bottom: vh };
       if (yesBtnRef.current) {
@@ -1095,12 +1031,10 @@ export default function MorphButton() {
       let tryCount = 0;
 
       do {
-
         const edgePref = stage === 'chaos' || stage === 'boss' ? 0.8 : 0.4;
         const useEdge = Math.random() < edgePref;
 
         if (useEdge && !isPanic) {
-
           const edge = Math.floor(Math.random() * 4);
           switch (edge) {
             case 0:
@@ -1132,31 +1066,24 @@ export default function MorphButton() {
         tryCount < 30
       );
 
-
       newX = clamp(newX, padding, maxX);
       newY = clamp(newY, padding, maxY);
-
 
       setFootprints((prev) => [...prev.slice(-4), { x: noPos.x + 40, y: noPos.y + 25 }]);
       setTimeout(() => setFootprints((prev) => prev.slice(1)), 1000);
 
-
       setNoPos({ x: newX, y: newY });
 
-
       inertiaRef.current = { vx: 0, vy: 0 };
-
 
       const rotMag =
         stage === 'boss' ? 30 : stage === 'chaos' ? 20 : stage === 'persuasion' ? 10 : 5;
       setNoRotation((Math.random() - 0.5) * rotMag * 2);
 
-
       if (stage === 'persuasion' || stage === 'chaos') {
         setSafeZoneVisible(true);
         setTimeout(() => setSafeZoneVisible(false), 500);
       }
-
 
       if ((stage === 'chaos' || stage === 'boss') && !isReducedMotion) {
         const cloneCount = Math.min(Math.floor((attempts - 9) / 2) + 2, 6);
@@ -1172,7 +1099,6 @@ export default function MorphButton() {
     [stage, attempts, noPos, isReducedMotion],
   );
 
-
   const handleNoClick = useCallback(
     (e?: React.MouseEvent | React.TouchEvent | undefined) => {
       e?.preventDefault?.();
@@ -1186,14 +1112,11 @@ export default function MorphButton() {
       setTimeout(() => setShake(false), 400);
       setScreenShake((prev) => Math.min(prev + 1, 5));
 
-
       setTimeout(() => setScreenShake((prev) => Math.max(prev - 1, 0)), 500);
-
 
       if (newAttempts >= 1) {
         teleportNo();
       }
-
 
       if (newAttempts >= 4) {
         setTimeout(() => teleportNo(), 150);
@@ -1203,34 +1126,27 @@ export default function MorphButton() {
         setTimeout(() => teleportNo(), 450);
       }
 
-
       const newYesScale = Math.min(1 + newAttempts * 0.06, 2.5);
       setYesScale(newYesScale);
       setYesGlow(Math.min(newAttempts * 10, 100));
-
 
       if (newAttempts >= 3 && newAttempts < 10) {
         setYesCopies(Math.min(Math.floor((newAttempts - 2) / 2) + 1, 3));
       }
 
-
       if (newAttempts >= 14) {
         setIsFullWidth(true);
       }
-
 
       if (newAttempts >= 5) {
         setIsYesMagnetic(true);
       }
 
-
       const newNoScale = Math.max(0.25, 1 - newAttempts * 0.035);
       setNoScale(newNoScale);
 
-
       const newHitbox = Math.max(0.25, 1 - newAttempts * 0.05);
       setNoHitboxScale(newHitbox);
-
 
       if (newAttempts === 1) setNoLabel('No');
       else if (newAttempts === 6) setNoLabel('No?');
@@ -1240,23 +1156,19 @@ export default function MorphButton() {
       else if (newAttempts === 18) setNoLabel('...');
       else if (newAttempts === 21) setNoLabel('');
 
-
       if (newAttempts === 7) {
-
         setNoMode('split');
         setTimeout(() => {
           setNoMode('button');
           teleportNo();
         }, 800);
       } else if (newAttempts === 10) {
-
         setNoMode('fake');
         setTimeout(() => {
           setNoMode('button');
           teleportNo();
         }, 1200);
       } else if (newAttempts === 11) {
-
         setNoMode('loading');
         let progress = 0;
         const interval = setInterval(() => {
@@ -1271,18 +1183,14 @@ export default function MorphButton() {
           }
         }, 30);
       } else if (newAttempts === 16) {
-
         setNoMode('slider');
         setSliderValue(0);
       } else if (newAttempts === 19) {
-
         setNoMode('checkbox');
         setIsNoChecked(false);
       } else if (newAttempts === 22) {
-
         setNoMode('draggable');
       }
-
 
       if (newAttempts === 14) {
         setShowFakeLag(true);
@@ -1292,7 +1200,6 @@ export default function MorphButton() {
         }, 400);
       }
 
-
       if (newAttempts === 12) {
         setNoBehindCard(true);
         setTimeout(() => {
@@ -1301,41 +1208,34 @@ export default function MorphButton() {
         }, 800);
       }
 
-
       if (newAttempts === 17) {
         setFakeDisabled(true);
         setTimeout(() => setFakeDisabled(false), 1000);
       }
-
 
       if (newAttempts >= 20 && !isReducedMotion) {
         setIsElastic(true);
         setTimeout(() => setIsElastic(false), 600);
       }
 
-
       if (newAttempts === 5) {
         setTimeout(() => setShowDialog(true), 300);
       }
 
-
       if (newAttempts === 13) {
         setShowCaptcha(true);
       }
-
 
       if (newAttempts === 3) {
         setShowDifficulty(true);
         setTimeout(() => setShowDifficulty(false), 3000);
       }
 
-
       const achievement = ACHIEVEMENTS.find((a) => a.at === newAttempts);
       if (achievement) {
         setShowAchievement(achievement.text);
         setTimeout(() => setShowAchievement(null), 2500);
       }
-
 
       const tooltips = [
         'This option is currently closed.',
@@ -1348,7 +1248,6 @@ export default function MorphButton() {
     },
     [attempts, teleportNo, stage, isReducedMotion, noPos],
   );
-
 
   const handleNoHover = useCallback(
     (e: React.MouseEvent) => {
@@ -1366,14 +1265,12 @@ export default function MorphButton() {
       const triggerDist = 130 + attempts * 12;
 
       if (dist < triggerDist) {
-
         const predictX = e.clientX + cursorVel.x * 8;
         const predictY = e.clientY + cursorVel.y * 8;
 
         const dx = btnCenter.x - predictX;
         const dy = btnCenter.y - predictY;
         const angle = Math.atan2(dy, dx);
-
 
         if (attempts >= 20 && !isReducedMotion) {
           const stretchX = Math.cos(angle) * 30;
@@ -1393,13 +1290,11 @@ export default function MorphButton() {
         let newX = btnCenter.x + Math.cos(angle) * moveDist - rect.width / 2;
         let newY = btnCenter.y + Math.sin(angle) * moveDist - rect.height / 2;
 
-
         newX = clamp(newX, 30, vw - rect.width - 30);
         newY = clamp(newY, 30, vh - rect.height - 30);
 
         setNoPos({ x: newX, y: newY });
         setNoRotation((Math.random() - 0.5) * 25);
-
 
         setCatchMeter((prev) => {
           const newVal = Math.min(prev + 8, 100);
@@ -1413,7 +1308,6 @@ export default function MorphButton() {
     [attempts, cursorVel, teleportNo, noMode, isReducedMotion],
   );
 
-
   const handleNoMouseDown = useCallback(
     (e: React.MouseEvent) => {
       if (attempts >= 2 && !isReducedMotion && noMode === 'button') {
@@ -1424,7 +1318,6 @@ export default function MorphButton() {
     },
     [attempts, teleportNo, noMode, isReducedMotion],
   );
-
 
   const handleSliderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const val = parseInt(e.target.value);
@@ -1448,7 +1341,6 @@ export default function MorphButton() {
     }
   };
 
-
   const handleCheckboxChange = () => {
     setIsNoChecked(true);
     setTimeout(() => {
@@ -1456,7 +1348,6 @@ export default function MorphButton() {
       handleNoClick();
     }, 100);
   };
-
 
   const handleDragStart = () => {
     setIsDragging(true);
@@ -1475,7 +1366,6 @@ export default function MorphButton() {
     if (!isDragging) return;
     setIsDragging(false);
 
-
     if (draggedNoPos) {
       inertiaRef.current = {
         vx: (draggedNoPos.x - noPos.x) * 0.3,
@@ -1484,16 +1374,13 @@ export default function MorphButton() {
       setNoPos(draggedNoPos);
       setDraggedNoPos(null);
 
-
       setTimeout(() => teleportNo(), 300);
     }
   };
 
-
   const handleYesClick = useCallback(() => {
     setHasAccepted(true);
   }, []);
-
 
   const handleTitleDoubleClick = useCallback(() => {
     setTitleClicks((prev) => prev + 1);
@@ -1503,13 +1390,11 @@ export default function MorphButton() {
     }
   }, [titleClicks]);
 
-
   const handleNoFocus = useCallback(() => {
     if (attempts >= 2) {
       teleportNo();
     }
   }, [attempts, teleportNo]);
-
 
   const renderNoButton = () => {
     if (showUltraYes) {
@@ -1669,11 +1554,9 @@ export default function MorphButton() {
           >
             {noLabel}
 
-
             {attempts >= 4 && (
               <span className="animate-pulse-ring pointer-events-none absolute inset-0 -m-6 rounded-full border-2 border-rose-200/40" />
             )}
-
 
             {showFakeLag && (
               <span className="absolute -top-8 left-1/2 -translate-x-1/2 animate-bounce rounded-full bg-yellow-400 px-2 py-0.5 text-xs whitespace-nowrap text-yellow-900">
@@ -1685,7 +1568,6 @@ export default function MorphButton() {
     }
   };
 
-
   if (hasAccepted) {
     const ending = ENDING_VARIANTS[endingIndex];
     return (
@@ -1696,7 +1578,6 @@ export default function MorphButton() {
         />
 
         <div className="animate-fade-scale z-10 flex max-w-2xl flex-col items-center gap-8 px-6 text-center">
-
           <div className="flex items-center justify-center gap-4">
             <div className="animate-bounce-gentle">
               <Bear
@@ -1719,7 +1600,6 @@ export default function MorphButton() {
             </div>
           </div>
 
-
           <div className="relative">
             <h1
               className={`font-display text-6xl font-black text-white drop-shadow-[0_0_30px_rgba(255,255,255,0.5)] sm:text-8xl ${ending.style === 'anime' ? 'animate-bounce' : ''}`}
@@ -1729,9 +1609,7 @@ export default function MorphButton() {
             <div className="absolute -inset-4 -z-10 rounded-full bg-white/20 blur-3xl" />
           </div>
 
-
           <p className="font-hand text-3xl text-white/95 sm:text-4xl">{ending.subtitle}</p>
-
 
           <div className="mt-6 w-full max-w-lg rounded-[2rem] border-2 border-white/40 bg-white/25 px-10 py-8 shadow-2xl backdrop-blur-xl">
             <p className="text-xl leading-relaxed font-medium text-white">
@@ -1746,7 +1624,6 @@ export default function MorphButton() {
             </div>
           </div>
 
-
           {attempts > 0 && (
             <div className="flex items-center gap-4 rounded-full bg-black/20 px-6 py-3 backdrop-blur-sm">
               <span className="text-white/80">It only took you</span>
@@ -1758,7 +1635,6 @@ export default function MorphButton() {
       </div>
     );
   }
-
 
   return (
     <div
@@ -1774,9 +1650,7 @@ export default function MorphButton() {
     >
       <FloatingHearts />
 
-
       <FootprintTrail positions={footprints} />
-
 
       {safeZoneVisible && yesBtnRef.current && (
         <div
@@ -1790,7 +1664,6 @@ export default function MorphButton() {
         />
       )}
 
-
       {(stage === 'chaos' || stage === 'boss') && !isReducedMotion && (
         <div
           className="pointer-events-none fixed inset-0 z-10"
@@ -1800,7 +1673,6 @@ export default function MorphButton() {
         />
       )}
 
-
       <div
         ref={cardRef}
         className={`relative z-20 flex w-full max-w-md flex-col items-center gap-5 rounded-[2.5rem] bg-white/95 px-8 pt-12 pb-10 shadow-2xl backdrop-blur-sm transition-all duration-500 ${ready ? 'scale-100 opacity-100' : 'scale-95 opacity-0'}`}
@@ -1809,7 +1681,6 @@ export default function MorphButton() {
           boxShadow: `0 25px 50px -12px rgba(255, 64, 129, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.5) inset`,
         }}
       >
-
         {devToolsOpen && (
           <div className="animate-fade-in absolute -top-14 left-1/2 -translate-x-1/2 rounded-full bg-gray-800 px-4 py-1.5 text-sm whitespace-nowrap text-white shadow-lg">
             I saw that. 👀
@@ -1834,7 +1705,6 @@ export default function MorphButton() {
           </div>
         )}
 
-
         {konamiProgress > 0 && konamiProgress < 10 && (
           <div className="absolute -top-12 left-1/2 flex -translate-x-1/2 gap-1 rounded-full bg-black/20 px-3 py-1">
             {Array.from({ length: konamiProgress }).map((_, i) => (
@@ -1849,7 +1719,6 @@ export default function MorphButton() {
           </div>
         )}
 
-
         {showUltraYes && (
           <div className="absolute -top-16 left-1/2 -translate-x-1/2 animate-pulse">
             <span className="rounded-full bg-gradient-to-r from-yellow-400 to-orange-500 px-5 py-2 text-sm font-bold text-white shadow-xl">
@@ -1857,7 +1726,6 @@ export default function MorphButton() {
             </span>
           </div>
         )}
-
 
         {showDifficulty && (
           <div className="absolute top-3 right-4 flex gap-2 text-xs font-medium">
@@ -1873,7 +1741,6 @@ export default function MorphButton() {
           </div>
         )}
 
-
         {idleTime > 0 && idleTime < 4 && stage !== 'intro' && (
           <div className="animate-fade-in absolute -top-12 left-1/2 -translate-x-1/2">
             <p className="font-hand rounded-full bg-white/80 px-4 py-1 text-lg text-rose-600 shadow-sm">
@@ -1881,7 +1748,6 @@ export default function MorphButton() {
             </p>
           </div>
         )}
-
 
         <div
           className={`transition-all duration-500 ${
@@ -1901,7 +1767,6 @@ export default function MorphButton() {
           />
         </div>
 
-
         <h1
           className="font-display cursor-pointer text-center text-2xl leading-tight font-black tracking-tight text-gray-900 select-none sm:text-3xl"
           onDoubleClick={handleTitleDoubleClick}
@@ -1913,13 +1778,11 @@ export default function MorphButton() {
           </span>
         </h1>
 
-
         {attempts > 0 && (
           <p className="font-hand animate-fade-in -mt-1 text-center text-lg text-rose-600">
             {noText}
           </p>
         )}
-
 
         {attempts >= 4 && (
           <div className="animate-fade-in flex gap-6 rounded-full bg-gray-100 px-4 py-2 text-xs font-medium text-gray-500">
@@ -1928,13 +1791,11 @@ export default function MorphButton() {
           </div>
         )}
 
-
         {attempts >= 9 && (
           <div className="animate-pulse rounded-full border border-red-200 bg-gradient-to-r from-red-100 to-pink-100 px-5 py-2 text-sm font-bold text-red-600">
             ⏰ Offer expires in 00:0{countdown}
           </div>
         )}
-
 
         {attempts >= 6 && (
           <div className="animate-fade-in text-center">
@@ -1945,7 +1806,6 @@ export default function MorphButton() {
             {comboRank && <p className="mt-0.5 text-xs font-bold text-purple-500">{comboRank}</p>}
           </div>
         )}
-
 
         {attempts >= 8 && (
           <div className="w-full max-w-[220px]">
@@ -1961,7 +1821,6 @@ export default function MorphButton() {
             </div>
           </div>
         )}
-
 
         {showCaptcha && (
           <div className="animate-pop rounded-xl border-2 border-gray-300 bg-gray-50 p-5 text-center shadow-inner">
@@ -1983,11 +1842,9 @@ export default function MorphButton() {
           </div>
         )}
 
-
         <div
           className={`mt-2 flex w-full flex-col items-center gap-4 ${isFullWidth ? 'px-0' : ''}`}
         >
-
           {yesCopies > 0 && (
             <div className="flex flex-wrap justify-center gap-3">
               {Array.from({ length: yesCopies }).map((_, i) => (
@@ -2003,7 +1860,6 @@ export default function MorphButton() {
             </div>
           )}
 
-
           <button
             ref={yesBtnRef}
             onClick={handleYesClick}
@@ -2018,7 +1874,6 @@ export default function MorphButton() {
           >
             <span className="font-hand relative z-10 flex items-center gap-2">{yesText}</span>
 
-
             {attempts >= 5 && !isReducedMotion && (
               <MiniConfetti
                 count={Math.min(attempts - 4, 10)}
@@ -2026,11 +1881,9 @@ export default function MorphButton() {
               />
             )}
 
-
             {attempts >= 7 && (
               <div className="animate-shimmer absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/30 to-transparent" />
             )}
-
 
             {attempts >= 3 && (
               <span className="animate-pulse-ring absolute inset-0 rounded-2xl bg-white/20" />
@@ -2038,9 +1891,7 @@ export default function MorphButton() {
           </button>
         </div>
 
-
         {attempts === 0 && showNo && <div className="mt-4">{renderNoButton()}</div>}
-
 
         {attempts > 0 && (
           <div className="flex flex-wrap justify-center gap-1 text-base">
@@ -2056,7 +1907,6 @@ export default function MorphButton() {
           </div>
         )}
 
-
         {attempts >= 18 && (
           <button
             onClick={handleNoClick}
@@ -2070,7 +1920,6 @@ export default function MorphButton() {
         )}
       </div>
 
-
       {noClones.map((clone) => (
         <NoClone
           key={clone.id}
@@ -2083,9 +1932,7 @@ export default function MorphButton() {
         />
       ))}
 
-
       {attempts > 0 && renderNoButton()}
-
 
       {showDialog && (
         <div className="animate-fade-in fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
@@ -2115,7 +1962,6 @@ export default function MorphButton() {
           </div>
         </div>
       )}
-
 
       {stage === 'boss' && attempts === 15 && (
         <div className="animate-boss-appear pointer-events-none fixed top-20 z-50">
