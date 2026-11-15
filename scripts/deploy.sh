@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
-# Local Cloudflare Pages deploy. Run as `bash scripts/deploy.sh [production|development]`.
-#
-# Auth modes (in order):
-#   1. .env.deploy.<env> file with CLOUDFLARE_API_TOKEN — used by both local and CI.
-#   2. Existing shell env vars (CLOUDFLARE_API_TOKEN / CLOUDFLARE_ACCOUNT_ID).
-#   3. OAuth login from `wrangler login` — for local-only deploys with no env file.
-#
-# CF_PROJECT_NAME defaults to "slides" when not provided.
+
+
+
+
+
+
+
+
 
 set -euo pipefail
 
@@ -51,8 +51,8 @@ fi
 
 echo "==> Deploying ${BUILD_DIR}/ to Cloudflare Pages project '${CF_PROJECT_NAME}' (branch: ${CF_BRANCH})"
 
-# When CLOUDFLARE_API_TOKEN is set, wrangler uses it; otherwise it falls back
-# to the local OAuth session.
+
+
 if [[ -n "${CLOUDFLARE_API_TOKEN:-}" ]]; then
   export CLOUDFLARE_API_TOKEN
 fi
